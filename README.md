@@ -1,25 +1,35 @@
 # Sunrise OS
 
-Sunrise OS é um projeto de sistema operacional desktop de código aberto baseado em Linux. O objetivo é criar uma experiência gráfica original, modular e eficiente para PCs x86-64 com UEFI. Fedora é a base inicial de desenvolvimento.
+Sunrise OS is an open-source desktop operating system project built on Linux for x86-64 UEFI PCs. It aims to deliver an original desktop with a modular shell, a native Wayland compositor, and independently implemented compatibility for selected Windows applications.
 
-## Arquitetura planejada
+**Project status** — Documentation and engineering planning are in place. The first milestone is a runnable developer session. The repository currently has no buildable desktop, installer, or verified application compatibility.
 
-- **Rust** é a linguagem preferencial para a lógica própria, incluindo o launcher, os serviços de sessão e o compositor Wayland com Smithay.
-- **Qt 6 e QML** cuidam da interface do desktop, incluindo painel, dock e launcher. C++ fica restrito às integrações que exigirem seu uso.
-- **Sunrise Bridge** é o subsistema planejado para investigar a execução de aplicativos Windows com Wine. A compatibilidade com aplicativos Adobe é uma meta de longo prazo que depende de testes por aplicativo, versão e função.
+## How the system is designed
 
-## Estado do projeto
+- **Linux and Wayland** provide the platform. Fedora in a virtual machine is the primary development and validation environment.
+- **Rust** is the default for first-party logic, including the compositor, launcher backend, and desktop services. Smithay is the preferred compositor toolkit.
+- **Qt 6 and QML** provide the shell UI. QML owns presentation and interaction. Handwritten C++ requires a documented integration need.
+- **Sunrise Bridge** is the planned, isolated compatibility subsystem. It draws on publicly documented Windows behavior while Sunrise builds, boots, and runs independently of Windows.
+- **Sunrise Glass** is the planned visual identity. The first milestone prioritizes functioning controls, keyboard interaction, and reliable startup.
 
-O projeto está na fase de documentação e preparação. O primeiro marco é testar painel, dock e launcher sobre um compositor Wayland de referência. O launcher deverá abrir três aplicativos reais. Em paralelo, uma prova isolada do compositor Smithay deverá executar pelo menos um cliente Wayland em uma sessão aninhada. Os testes serão realizados em ambiente de desenvolvimento isolado.
+## First milestone
 
-## Documentação
+Sprint 01 targets a real panel, dock, and launcher on a reference Wayland compositor. The launcher must discover and open three real applications through its Rust backend. A separate Smithay experiment must run nested and display a real Wayland client. The sprint records a clean build, a 30-minute stability run, and any environment blockers.
 
-- [Arquitetura e componentes](docs/architecture/overview.md)
-- [Escopo e critérios de aceite do Sprint 01](docs/roadmap/sprint-01.md)
-- [Padrões de código](docs/development/coding-standards.md)
-- [Regras para agentes](AGENTS.md)
-- [Índice da documentação](docs/README.md)
+Broad compatibility with Adobe applications is a mandatory future requirement. Compatibility will be measured by app, version, and workflow. The target application list and validated versions remain open. See the [compatibility requirements](docs/architecture/compatibility.md).
 
-## Licença
+## Start here
 
-O projeto usa [Apache-2.0](LICENSE) para o código original. Dependências e componentes de terceiros seguem suas próprias licenças. Consulte a [política de clean-room e licenças](docs/clean-room/policy.md).
+| Goal | Document |
+| --- | --- |
+| Set up a development environment | [Fedora VM guide](docs/development/environment.md) |
+| Understand component ownership | [Architecture overview](docs/architecture/overview.md) |
+| Find acceptance criteria | [Sprint 01](docs/roadmap/sprint-01.md) |
+| See later milestones | [Project roadmap](docs/roadmap/overview.md) |
+| Contribute or work with an agent | [Agent instructions](AGENTS.md) and [coding standards](docs/development/coding-standards.md) |
+
+See the [documentation index](docs/README.md) for all project references.
+
+## License
+
+First-party code uses [Apache-2.0](LICENSE). Third-party components retain their own licenses. See the [clean-room policy](docs/clean-room/policy.md) for provenance and review requirements.

@@ -1,20 +1,22 @@
-# ADR 0001 — Base Linux, Wayland, Qt e Rust
+# ADR 0001 — Linux, Wayland, Qt, and Rust
 
-**Estado** — Diretriz inicial do mantenedor. A implementação e os testes de integração estão pendentes.
+**Status** — Accepted direction. Implementation and integration evidence are pending.
 
-## Contexto
+## Context
 
-O Sunrise OS precisa entregar um desktop original em etapas. O primeiro marco precisa provar a execução do shell e, separadamente, a viabilidade de um compositor próprio em um ambiente isolado.
+The project needs an independent Linux desktop. The first milestone must validate an original shell and investigate a compositor in parallel. A consistent language boundary helps keep business logic testable and UI code small.
 
-## Decisão
+## Decision
 
-Usar Linux e Fedora como base de desenvolvimento, Wayland como protocolo gráfico, Qt 6/QML com C++ quando necessário no shell e Rust com Smithay como caminho preferencial para o compositor. Desenvolver o shell sobre um compositor de referência enquanto o compositor próprio é testado em modo aninhado.
+Use Linux on x86-64 UEFI and develop primarily in a Fedora VM. Use Wayland for display protocols. Start the Qt 6/QML shell on a reference compositor. Build a separate nested Rust compositor probe with Smithay.
 
-## Alternativas e consequências
+Use Rust by default for first-party behavior. Keep presentation and interaction in QML. Require a documented technical reason and a narrow boundary for handwritten C++. Evaluate [CXX-Qt](https://kdab.github.io/cxx-qt/book/getting-started/5-cmake-integration.html) using a Fedora launcher probe. The probe must expose a Rust-backed app list, handle launch failure visibly, and open three applications with a reproducible build. Record the final bridge choice after the probe.
 
-- Um kernel próprio ampliaria o trabalho de drivers e boot antes de validar o desktop. Linux permite concentrar o primeiro marco em componentes próprios.
-- X11 como base primária mudaria o alvo de integração do compositor. O projeto prioriza Wayland e prevê XWayland depois.
-- Integrar o compositor próprio desde o primeiro painel acoplaria a validação de duas frentes. A separação permite testar cada uma e expõe cedo lacunas de protocolos, como suporte a layer-shell.
-- Qt/QML e Rust exigem duas cadeias de ferramentas. A fronteira entre os processos reduz integrações nativas e permite validar cada build separadamente.
+## Alternatives and consequences
 
-Se evidências inviabilizarem uma decisão, abra nova ADR com estado, contexto, alternativas, evidências, impactos e recomendação. Vincule a decisão anterior e registre aprovação antes de alterar a arquitetura.
+- A custom kernel would introduce boot and driver work before the desktop is testable. Using Linux lets the first increment focus on the shell.
+- X11 as the primary display target would change the compositor integration path. Wayland is the native target, with XWayland reserved for later compatibility work.
+- Starting the shell on the Sunrise compositor would couple two unproven components. A reference compositor lets each run independently and makes protocol gaps easier to isolate.
+- A C++ backend would put core logic in a second systems language. The Rust-first approach adds build integration work at the Qt boundary, which the launcher probe must quantify.
+
+A future ADR should identify the affected decision, evidence, alternatives, migration cost, and acceptance checks before changing this direction.

@@ -1,21 +1,28 @@
-# Como entregar um incremento
+# How to deliver an increment
 
-1. Identifique a raiz, leia as regras do caminho afetado e inspecione os arquivos e as mudanças locais. Se houver dúvida sobre qual checkout deve receber uma edição, esclareça o destino antes de escrever.
-2. Confirme o ambiente para os comandos da tarefa. Para build gráfico, registre SO, Fedora ou alternativa Linux, gerenciador de pacotes, Rust/Cargo, CMake, Qt, Wayland, ferramentas de build, virtualização e capacidades gráficas disponíveis. Registre versões, lacunas e impacto. Em Windows, use VM Fedora ou WSL2/WSLg já autorizado e adequado. A abertura de uma janela em WSLg e a validação do compositor aninhado são verificações distintas.
-3. Delimite arquivos, riscos e critérios. Implemente uma unidade funcional. Inspecione o diff, dependências, licenças, tratamento de falhas e acessibilidade aplicável.
-4. Execute os checks de formato, lint, build e testes aplicáveis. Para testes manuais, registre ambiente, versão, comando ou procedimento, resultado e trecho relevante de log. Informe limitações de GPU ou virtualização. Use capturas e métricas somente como evidência do que foi observado.
-5. Classifique cada critério. Use `PASS` para critério comprovado, `FAIL` para execução que contrariou o critério, `BLOCKED` para pré-requisito ausente que impediu execução e `NOT RUN` para verificação pendente ou fora do incremento. Use `PARTIAL` no resumo quando a entrega tiver critérios cumpridos e outros pendentes. Registre o bloqueio ou falha em um item técnico local. Abra issue remota quando houver autorização.
-6. Entregue o relatório abaixo. Distingua código funcional, protótipos, falhas e verificações pendentes. Avance ao próximo marco quando os critérios mínimos do marco atual estiverem comprovados.
+1. Inspect the branch, working tree, local instructions, affected callers, and the last verified behavior. State the goal, paths, risks, and checks. Use the [environment guide](environment.md) for development setup.
+2. Implement one independently verifiable change. Preserve existing work and error handling. Review dependencies, licensing, accessibility, and permission changes. If a design decision crosses a component boundary, record its evidence and tradeoffs in an ADR.
+3. Run the relevant checks from the component's normal entry point. For manual tests, record the OS, session type, tool versions, input, reproduction steps, and observed behavior. For graphic tests, record guest GPU or software rendering and distinguish a reference shell session from a nested compositor test.
+4. Review the diff, then report each criterion using the status table. For a failure or blocker, capture the smallest useful log excerpt, impact, and retry condition. Record a local follow-up or open a remote issue when authorized.
+5. When publishing is authorized, use English semantic subjects such as `docs: expand the Fedora development guide`. Stage only the intended change, run `git diff --cached --check`, and verify the published revision.
+
+| Status | Meaning |
+| --- | --- |
+| PASS | Evidence confirms the criterion |
+| FAIL | The check ran and the observed result contradicted the criterion |
+| BLOCKED | A missing prerequisite prevented the check |
+| NOT RUN | The check was outside the increment or remains pending |
+| PARTIAL | The delivery includes both completed and outstanding criteria |
 
 ```text
-SUNRISE OS — RELATÓRIO DE INCREMENTO
-Marco/Tarefa:
-Status: PASS / PARTIAL / FAIL / BLOCKED / NOT RUN
-Implementado:
-Arquivos alterados:
-Como executar:
-Testes executados e resultados:
-Limitações conhecidas:
-Riscos/licenças:
-Próximo incremento recomendado:
+SUNRISE OS — INCREMENT REPORT
+Milestone or task:
+Status:
+Implemented:
+Files changed:
+How to reproduce:
+Checks and observed results:
+Known limitations:
+Risks and licensing:
+Next increment:
 ```

@@ -1,15 +1,17 @@
-# Sprint 01 — Fundação funcional
+# Sprint 01 — Functional foundation
 
-Prazo estimado de 10 dias úteis. A documentação de agentes é a preparação inicial. Os critérios técnicos abaixo aguardam execução.
+The initial estimate is 10 working days. Use evidence to determine completion. This milestone targets a reproducible developer session, a minimal working shell, and a separate Smithay probe.
 
-| Etapa | Critério de aceite |
+| Step | Acceptance evidence |
 | --- | --- |
-| S01-01 — Diagnóstico | Registrar raiz, branch, estado Git, instruções locais e matriz de pré-requisitos, com riscos de GPU e virtualização |
-| S01-02 — Fundação | Preparar README, contribuição, licença e inventário inicial no checkout. Preservar documentação existente e adotar regras de arquivos ignorados |
-| S01-03 — Ambiente e build | Verificar build limpo com comandos documentados em Fedora ou ambiente reproduzível. Adicionar scripts seguros, configuração Qt/QML com CMake, Cargo conforme necessidade e CI Linux com checks executáveis |
-| Shell de referência | Rodar painel com hora real e ação para abrir o launcher. Rodar dock com ícones e cliques que iniciam apps. Documentar suporte a layer-shell e validar o fallback quando aplicável |
-| Launcher | Descobrir entradas `.desktop` e abrir pelo menos três apps reais no ambiente de teste. Tratar erro de lançamento e exibir estado de execução somente quando houver evidência |
-| Prova Smithay | Executar compositor aninhado e abrir pelo menos um cliente Wayland. Registrar protocolos, entrada, renderização e lacunas para integração |
-| Estabilidade e revisão | Executar sessão de 30 minutos sem crash e verificar formato, lint e testes aplicáveis. Auditar dependências, licenças, alterações e arquivos ignorados |
+| S01-01 — Diagnose the environment | Record root, branch, Git status, tooling versions, graphics/session capabilities, and missing prerequisites using the [environment guide](../development/environment.md) |
+| S01-02 — Prepare the repository | Confirm README, license, contribution rules, third-party inventory, and ignore rules. Preserve existing documentation and changes |
+| S01-03 — Build and CI | Reproduce a clean build from the documented Fedora setup. Provide safe build and prerequisite commands, CMake/Qt configuration, Cargo where needed, and actual Linux CI checks |
+| Reference shell | Demonstrate a panel with live system time and a launcher action. Demonstrate a dock with discovered icons and working launches. Record layer-shell support and test any required fallback |
+| Rust-backed launcher | In QML, display eligible desktop entries and launch three real applications from Rust. Demonstrate invalid-entry handling and a visible launch failure. Claim running state only where observed |
+| Nested Smithay probe | Run separately and display at least one real Wayland client. Record the backend, rendering, input, protocols, and gaps relevant to shell integration |
+| Stability and audit | Observe a 30-minute session without a crash. Record format, lint, build, and test results and review dependency licenses and ignored files |
 
-Fora do marco ficam kernel próprio, dual boot, ISO de produção, instalador, loja, drivers exclusivos, Adobe funcional, tema Sunrise Glass final, compositor completo e telemetria remota. Use o [fluxo dos agentes](../development/agent-workflow.md) para classificar e registrar critérios pendentes.
+Outside this sprint are a custom kernel, dual boot, production ISO, installer, store, proprietary drivers, Adobe execution, final Sunrise Glass effects, a full compositor, and remote telemetry.
+
+Record each result using the [agent workflow](../development/agent-workflow.md). If nested rendering is blocked, record the tested backend, environment, and logs. Keep the acceptance criterion open until it is demonstrated.

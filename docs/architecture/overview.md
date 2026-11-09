@@ -1,18 +1,24 @@
-# Arquitetura de referência
+# Reference architecture
 
-A plataforma inicial é PC x86-64 com UEFI. A base de desenvolvimento é Fedora mínima ou ambiente Fedora reproduzível. Linux e seus drivers são dependências externas. A estrutura abaixo é lógica. Cada diretório entra quando houver trabalho concreto para ele.
+The initial target is x86-64 UEFI. Linux, drivers, and Fedora development images are external dependencies. The following paths are logical ownership boundaries. A directory is added when it has an implementation or an artifact to maintain.
 
-| Caminho | Responsabilidade |
+| Path | Ownership |
 | --- | --- |
-| `compositor/sunrise-compositor/` | Superfícies Wayland, entrada, foco, geometria, renderização, monitores e protocolos |
-| `shell/` | Desktop, painel, dock, launcher, notificações e widgets em Qt 6/QML. No Sprint 01, o shell usa um compositor de referência |
-| `apps/` | Aplicativos como arquivos e configurações. Usam portais e APIs Linux com o menor privilégio necessário |
-| `services/` | Sessão, preferências, energia e indexação. Processos separados preferem contratos D-Bus versionados |
-| `compatibility/` | Sunrise Bridge, com pesquisa, perfis por aplicativo e resultados de testes. Mantém sua lógica isolada do compositor e do kernel |
-| `distribution/` | Imagens, instalador e atualizações após a base do desktop |
-| `design/` | Ativos originais, tokens e especificações da futura identidade Sunrise Glass |
-| `scripts/`, `tests/`, `.github/workflows/` | Ferramentas locais, testes entre componentes e verificações de CI |
+| `compositor/sunrise-compositor/` | Wayland surfaces, focus, input, window placement, rendering, monitors, and protocol state in Rust |
+| `shell/` | Qt/QML presentation for desktop, panel, dock, launcher, notifications, and widgets. First-party application logic lives in Rust |
+| `services/` | Session lifecycle, settings, power, and indexing. Separate processes prefer versioned D-Bus interfaces |
+| `apps/` | Native applications such as file management and settings. They use Linux APIs and portals with least privilege |
+| `compatibility/` | Sunrise Bridge research, application profiles, and reproducible test results |
+| `distribution/` | Images, installation, recovery, and update mechanisms after desktop validation |
+| `design/` | Original assets, design tokens, and Sunrise Glass specifications |
+| `scripts/`, `tests/`, `.github/workflows/` | Reusable tooling, cross-component checks, and Linux CI |
 
-A interface do shell apresenta estados e dispara ações. Regras de descoberta e lançamento pertencem à integração nativa do componente responsável. O compositor fica restrito às responsabilidades Wayland da tabela. Serviços maduros como systemd, Mesa/DRM/KMS, PipeWire, NetworkManager, udev e portais entram conforme necessidade. Clientes Wayland nativos vêm primeiro. XWayland e Flatpak entram em etapas posteriores.
+## Runtime boundaries
 
-O Bridge investiga Wine para aplicativos Windows e usa Proton como referência para jogos. A compatibilidade ampla com Adobe é requisito de longo prazo, com viabilidade e prazo em aberto. A matriz de evidências faz parte da [política de clean-room](../clean-room/policy.md).
+During Sprint 01, the shell runs on a reference Wayland compositor. The nested Smithay prototype has a separate runtime and acceptance test. The shell eventually moves to the Sunrise compositor once protocol and behavior gaps are resolved.
+
+The launcher UI requests discovery or launch through a small backend interface. Rust handles desktop entry semantics, structured invocation, and errors. The UI presents known results and keeps an unknown running state distinct from a confirmed one.
+
+Systemd, Mesa/DRM/KMS, PipeWire, NetworkManager, udev, and XDG Desktop Portals enter as their capabilities are needed. Native Wayland clients come first. XWayland and Flatpak integration follow desktop stabilization.
+
+Sunrise Bridge remains optional for native desktop operation. It owns per-app configuration and diagnostics. Its compatibility paths run on Linux without a Windows installation or Windows system components. See the [compatibility requirements](compatibility.md) and [platform decision](../adr/0001-linux-wayland-qt-rust.md).

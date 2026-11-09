@@ -1,7 +1,16 @@
-# Política de clean-room e licenças
+# Clean-room and licensing policy
 
-- Use requisitos originais e documentação pública lícita. É proibido incorporar código proprietário, trechos descompilados, interfaces copiadas, logotipos, fontes, ícones ou outros ativos protegidos de Windows, macOS e Adobe.
-- Separe observações de pesquisa da implementação independente. Quando houver engenharia reversa permitida, registre autorização, fonte, versão observada, comportamento público esperado, testes e proveniência da implementação. Encaminhe dúvidas jurídicas relevantes para revisão apropriada antes de incorporar o material.
-- O código original do Sunrise OS tem Apache-2.0 como licença padrão planejada. Preserve licenças de terceiros e avalie cada combinação, especialmente código GPLv2-only. Ao incorporar código, registre fonte, versão, licença, avisos e obrigações em inventário e `THIRD_PARTY_LICENSES.md`. Inclua `LICENSE` e, quando aplicável, `NOTICE` e identificadores SPDX.
-- Preserve instaladores e binários proprietários fora da distribuição, salvo autorização e licença aplicável. Proteções de licença, autenticação e DRM devem ser respeitadas. Registre bloqueios em vez de contorná-los.
-- Na pesquisa do Bridge, registre aplicativo e versão, ambiente, instalação, licença/login, interface, arquivos, plugins, GPU, renderização, codecs, exportação e estabilidade. Marque evidência por função e declare compatibilidade somente no alcance comprovado.
+## Research and implementation
+
+- Use original requirements and lawful public documentation. Keep proprietary code, disassembly, extracted assets, fonts, icons, logos, and copied interfaces out of the repository and implementation inputs.
+- Record the public source, relevant version, observed behavior, and intended test. Separate research observations from independent implementation work. If reverse engineering is lawful and permitted for the particular case, document the basis and boundaries before relying on it. Refer unresolved questions for appropriate review.
+- Use Windows behavior as a compatibility reference. Keep Windows installations, system files, and proprietary Windows services outside the build and runtime design.
+- Use legitimately obtained Adobe installers and licenses for authorized tests. Redistribution requires permission. Respect authentication, DRM, and licensing controls and log blockers rather than bypassing them.
+
+## Dependency intake
+
+For each imported dependency or asset, record the upstream source, exact version, license, notices, intended use, and applicable redistribution obligations. Preserve third-party terms. Maintain a dependency inventory and third-party license notices as the project starts integrating dependencies. Include `NOTICE` and SPDX identifiers where applicable.
+
+The repository's [Apache-2.0 license](../../LICENSE) covers first-party code. The Linux kernel and other third-party components keep their own licenses. Review the actual mode of integration, especially when GPLv2-only code is involved.
+
+For per-application research and evidence, use the [compatibility requirements](../architecture/compatibility.md).

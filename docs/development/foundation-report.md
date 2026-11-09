@@ -1,11 +1,13 @@
-# Sunrise OS — Relatório de incremento
+# Initial documentation delivery
 
-- **Marco** — Fundação documental para agentes.
-- **Status** — PASS para a entrega documental.
-- **Implementado** — Regras de conduta e autorização, mapa de arquitetura, ADR inicial, convenções Rust/C++/QML, fluxo de verificação, política de clean-room e critérios do Sprint 01.
-- **Arquivos** — [AGENTS.md](../../AGENTS.md), este relatório e as referências no [índice](../README.md).
-- **Como usar** — Abra a pasta SunriseOS como workspace e comece pelo AGENTS.md. Consulte o índice antes de trabalhar no componente.
-- **Verificação** — Conferência dos nove arquivos Markdown, leitura UTF-8 e resolução dos links relativos.
-- **Limitações** — A pasta local ainda não é um checkout Git. Build, CI, execução gráfica e compatibilidade estão em NOT RUN neste incremento.
-- **Riscos e licenças** — A política de licenças está registrada. A aplicação das licenças e a revisão de dependências pertencem ao incremento que incorporar código ou ativos.
-- **Próximo incremento** — Confirmar o checkout Sunrise OS e executar S01-01, com diagnóstico de Git, ferramentas e ambiente gráfico.
+This report records the original local documentation increment before the repository was connected to GitHub.
+
+| Item | Result |
+| --- | --- |
+| Status | PASS for the initial documentation delivery |
+| Contents | Agent rules, architecture map, first ADR, coding conventions, delivery workflow, clean-room policy, and Sprint 01 criteria |
+| Evidence | Nine Markdown files were read as UTF-8 and 18 relative links resolved during that increment |
+| Technical validation | Build, CI, graphical execution, and compatibility were NOT RUN |
+| Licensing | The initial policy documented provenance and licensing review requirements for future code and assets |
+
+The repository now provides the [project README](../../README.md) and [documentation index](../README.md). For the next engineering increment, use the [Sprint 01 acceptance plan](../roadmap/sprint-01.md) and [development environment guide](environment.md).

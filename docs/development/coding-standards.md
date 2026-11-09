@@ -1,21 +1,24 @@
-# Padrões de código
+# Coding standards
 
-## Organização
+## Component layout
 
-| Área | Convenção inicial |
+| Area | Convention |
 | --- | --- |
-| Rust | Cargo. `Cargo.toml` por crate, módulos em `src/` e testes de integração em `tests/` da crate. Use workspace quando houver crates que precisem de build coordenado |
-| C++ e QML | CMake com alvos por componente. Mantenha C++ em `src/`, QML em `qml/` e testes em `tests/` dentro do componente |
-| Testes entre componentes | Use `tests/` na raiz para cenários que atravessam componentes |
-| Scripts | Use `scripts/` para verificações e builds reutilizados. Declare ambiente, argumentos e pré-requisitos. Use códigos de saída coerentes |
+| Rust | Use `Cargo.toml`, `src/`, and crate-local `tests/` for integration tests. Introduce a workspace when crates need a coordinated build |
+| Qt and QML | Use CMake targets per component, `qml/` for QML, `src/` for handwritten native integration, and `tests/` for component tests. Keep bridge inputs and build ownership explicit |
+| Shared checks | Use root `tests/` for cross-component scenarios and `scripts/` for reusable environment and build tasks |
+| Naming | Use Rust `snake_case` for functions and modules, `PascalCase` for Rust types and QML components, and `lowerCamelCase` for QML properties and Qt-facing methods |
 
-Em código existente, siga a organização local e os arquivos de configuração. Em código novo, use `snake_case` para módulos e funções Rust, `PascalCase` para tipos Rust e componentes QML, e `lowerCamelCase` para propriedades QML e métodos de integração Qt. Use identificadores técnicos em inglês. Mantenha documentação de contribuição em português.
+Follow established local conventions and configuration. Use English names and repository documentation. Extract shared abstractions when concrete reuse justifies them.
 
-## Implementação
+## Implementation contracts
 
-- Coloque lógica no componente responsável segundo a [arquitetura](../architecture/overview.md). Reuse padrões existentes. Extraia uma abstração compartilhada quando houver pelo menos dois usos concretos.
-- Use tipos explícitos nas fronteiras. Em Rust, propague falhas recuperáveis com `Result`. Em QML, mantenha apresentação, estado visual e interação. Exponha a lógica nativa por uma interface pequena e testável.
-- Valide dados externos. Use API compatível com a semântica das entradas `.desktop` e preserve os argumentos sem interpretar texto em um shell. Trate entradas inválidas, apps indisponíveis e falhas ao lançar.
-- Preserve acessibilidade por teclado e nomes acessíveis para controles. Registre erros com contexto suficiente para diagnóstico, sem dados sensíveis.
-- Use configurações de formatação versionadas quando existirem. Para Rust, a referência inicial é `cargo fmt --all -- --check`, `cargo clippy --all-targets` e `cargo test` no manifesto ou workspace aplicável. Para C++/QML, use os alvos e ferramentas configurados no componente. Registre versões verificadas antes de fixar mínimos.
-- Adicione verificação focada quando a mudança introduzir lógica relevante ou corrigir regressão sem cobertura. Documente build reproduzível, pré-requisitos e passos de execução quando houver código executável. CI Linux deve executar verificações reais. Evite declarar ganho de desempenho sem linha de base comparável.
+- Use Rust for domain logic, validation, filesystem work, and process control. Keep QML focused on bindings, visual state, input, and accessibility. Document any handwritten C++ exception and keep it at the native boundary.
+- Model recoverable Rust failures with `Result`. Add context at the layer that knows what operation failed. Keep secrets and sensitive path or profile contents out of logs.
+- Treat desktop entries, filenames, D-Bus payloads, and imported profiles as external input. Use the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry/latest/) for discovery, eligibility, argument handling, and activation. Pass arguments structurally and avoid interpreting external strings with a shell.
+- Give interactive UI controls accessible names, keyboard focus, and an observable success or failure state. Keep expensive work off the UI thread. Document the ownership and threading rules of any bridge.
+- Keep established callers working. Cover changes to trust boundaries and regressions with a focused check. Record the relevant dependency version and license when adding a dependency.
+
+## Verification conventions
+
+Use repository commands once defined. Typical Rust checks are `cargo fmt --all -- --check`, `cargo clippy --all-targets`, and `cargo test` from the applicable crate or workspace. Use the configured build and test targets for CMake and QML. Document the exact setup, commands, and tool versions once verified. Compare performance only against a reproducible baseline.
