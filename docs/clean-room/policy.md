@@ -1,0 +1,7 @@
+# Política de clean-room e licenças
+
+- Use requisitos originais e documentação pública lícita. É proibido incorporar código proprietário, trechos descompilados, interfaces copiadas, logotipos, fontes, ícones ou outros ativos protegidos de Windows, macOS e Adobe.
+- Separe observações de pesquisa da implementação independente. Quando houver engenharia reversa permitida, registre autorização, fonte, versão observada, comportamento público esperado, testes e proveniência da implementação. Encaminhe dúvidas jurídicas relevantes para revisão apropriada antes de incorporar o material.
+- O código original do Sunrise OS tem Apache-2.0 como licença padrão planejada. Preserve licenças de terceiros e avalie cada combinação, especialmente código GPLv2-only. Ao incorporar código, registre fonte, versão, licença, avisos e obrigações em inventário e `THIRD_PARTY_LICENSES.md`. Inclua `LICENSE` e, quando aplicável, `NOTICE` e identificadores SPDX.
+- Preserve instaladores e binários proprietários fora da distribuição, salvo autorização e licença aplicável. Proteções de licença, autenticação e DRM devem ser respeitadas. Registre bloqueios em vez de contorná-los.
+- Na pesquisa do Bridge, registre aplicativo e versão, ambiente, instalação, licença/login, interface, arquivos, plugins, GPU, renderização, codecs, exportação e estabilidade. Marque evidência por função e declare compatibilidade somente no alcance comprovado.
