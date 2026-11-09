@@ -1,4 +1,4 @@
-# Sunrise OS
+ Sunrise OS
 
 Sunrise OS is an open-source desktop operating system project built on Linux for x86-64 UEFI PCs. It aims to deliver an original desktop with a modular shell, a native Wayland compositor, and independently implemented compatibility for selected Windows applications.
 
