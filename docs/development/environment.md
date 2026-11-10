@@ -35,4 +35,17 @@ Use an existing authorized setup for Rust checks and limited Qt/QML application 
 | Evidence | Command, outcome, and smallest useful log excerpt |
 | Blockers | Impact and next reproducible check |
 
-This guide defines the diagnostic procedure. Project build and launch commands will be added when corresponding targets exist and have been verified.
+Run the read-only diagnostic with `sh scripts/check-dev-environment.sh` from the repository root. Use the [Rust and QML app menu instructions](../../shell/launcher/README.md) for the first build. Record the results independently on both PCs.
+
+## Verify the nested compositor separately
+
+Use the upstream [Smithay Smallvil example](https://github.com/Smithay/smithay/tree/master/smallvil) in a separate checkout inside the Fedora guest. Record the exact Smithay revision and inspect its requirements before building. Smallvil starts an unprivileged nested window and can start a Wayland client with the command specified by `--command`.
+
+```sh
+git clone https://github.com/Smithay/smithay.git smithay-probe
+cd smithay-probe
+git rev-parse HEAD
+RUST_LOG=info cargo run --locked -p smallvil -- --command weston-terminal
+```
+
+Use `weston-terminal` only if it is installed in the guest, or substitute an installed native Wayland client that starts without arguments. Confirm the client renders **inside** the nested compositor, then verify input and close the nested window. Record the host compositor, virtual GPU or software renderer, client, and logs. If the nested backend fails to initialize, record the check as BLOCKED and keep the criterion open.

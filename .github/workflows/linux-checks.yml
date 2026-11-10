@@ -1,0 +1,43 @@
+# Linux CI checks (Sprint 01). Runs the launcher crate checks on a Fedora-equivalent environment.
+# Package set mirrors docs/development/environment.md and shell/launcher/README.md.
+name: linux-checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  launcher:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: shell/launcher
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes \
+            pkg-config libglib2.0-dev \
+            qt6-base-dev qt6-declarative-dev libgl1-mesa-dev
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-launcher-${{ hashFiles('shell/launcher/Cargo.lock') }}
+      - name: Format check
+        run: cargo fmt --all -- --check
+      - name: Clippy (default features)
+        run: cargo clippy --locked --all-targets -- -D warnings
+      - name: Tests (default features)
+        run: cargo test --locked
+      - name: Build qt-probe (compile-only; needs Qt headers, no display)
+        run: cargo build --locked --features qt-probe
+      - name: Catalog list smoke test
+        run: cargo run --locked -- list
