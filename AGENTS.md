@@ -25,3 +25,5 @@ These rules apply across the repository. Read any more specific instructions in 
 ## Verify and report
 
 Use the [delivery workflow](docs/development/agent-workflow.md). Run applicable format, lint, build, test, and manual checks. Report the actual environment, commands, outcomes, and blockers. Label prototypes clearly and give each unexecuted check its real status. Record limitations without weakening acceptance criteria after testing.
+
+When a local project notebook is configured, update its status and engineering log in the same turn after meaningful decisions, implementation, tests, environment changes, or blockers. Record evidence and the next step.

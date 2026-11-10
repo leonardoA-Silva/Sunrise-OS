@@ -11,6 +11,7 @@ The [project README](../README.md) describes the product and its current status.
 | [Coding standards](development/coding-standards.md) | Consistent Rust, QML, and C++ conventions |
 | [Agent workflow](development/agent-workflow.md) | Verification, reporting, and handoff |
 | [Clean-room policy](clean-room/policy.md) | Provenance, dependencies, and lawful compatibility research |
+| [Third-party inventory](reference/third-party.md) | Dependencies, licenses, and redistribution notes |
 | [Sprint 01](roadmap/sprint-01.md) | First milestone sequence and acceptance |
 | [Project roadmap](roadmap/overview.md) | Gates for later milestones |
 | [Foundation report](development/foundation-report.md) | Historical record of the initial documentation delivery |

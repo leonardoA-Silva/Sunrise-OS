@@ -2,7 +2,7 @@
 
 Sunrise OS is an open-source desktop operating system project built on Linux for x86-64 UEFI PCs. It aims to deliver an original desktop with a modular shell, a native Wayland compositor, and independently implemented compatibility for selected Windows applications.
 
-**Project status** — Documentation and engineering planning are in place. The first milestone is a runnable developer session. The repository currently has no buildable desktop, installer, or verified application compatibility.
+**Project status** — Documentation and a Sprint 01 [app menu probe](shell/launcher/README.md) are in place. Fedora validation is pending. The first milestone is a runnable developer session. The full desktop, installer, and application compatibility are later milestones.
 
 ## How the system is designed
 
@@ -26,7 +26,7 @@ Broad compatibility with Adobe applications is a mandatory future requirement. C
 | Understand component ownership | [Architecture overview](docs/architecture/overview.md) |
 | Find acceptance criteria | [Sprint 01](docs/roadmap/sprint-01.md) |
 | See later milestones | [Project roadmap](docs/roadmap/overview.md) |
-| Contribute or work with an agent | [Agent instructions](AGENTS.md) and [coding standards](docs/development/coding-standards.md) |
+| Contribute or work with an agent | [Agent instructions](AGENTS.md), [contribution rules](CONTRIBUTING.md), and [coding standards](docs/development/coding-standards.md) |
 
 See the [documentation index](docs/README.md) for all project references.
 
