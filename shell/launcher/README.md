@@ -15,6 +15,15 @@ sudo dnf install git cargo rustfmt clippy gcc-c++ cmake pkgconf-pkg-config \
 
 If qmake is outside the guest's PATH, set `QMAKE` to the path reported by the Qt package. The build needs Qt 6.4 or later for the QML load failure signal. The manifest and lockfile record the Rust dependency versions. The exact Fedora package set still needs a clean-guest build.
 
+On Fedora, cargo 1.98 (the distro-provided 1.98.1 at the time of writing) drops `-l` directives emitted by dependency build scripts, so Qt linking needs `lld` in addition to the packages above:
+
+```sh
+sudo dnf install lld
+export RUSTFLAGS="-C link-arg=-fuse-ld=lld"
+```
+
+Keep this export for every build, clippy, and run command in this README while it applies; plain GNU ld.bfd fails on the generated link group.
+
 ## Run the probe
 
 From this directory in the Linux guest:
