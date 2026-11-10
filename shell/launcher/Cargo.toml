@@ -1,0 +1,24 @@
+[package]
+name = "sunrise-app-menu"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+publish = false
+default-run = "sunrise-app-menu"
+
+[features]
+qt-probe = ["dep:cxx", "dep:cxx-qt", "dep:cxx-qt-lib", "dep:cxx-qt-build"]
+
+[target.'cfg(target_os = "linux")'.dependencies]
+gio = "0.21.5"
+cxx = { version = "1", optional = true }
+cxx-qt = { version = "0.10", optional = true }
+cxx-qt-lib = { version = "0.10", features = ["qt_gui", "qt_qml"], optional = true }
+
+[target.'cfg(target_os = "linux")'.build-dependencies]
+cxx-qt-build = { version = "0.10", optional = true }
+
+[[bin]]
+name = "sunrise-app-menu-qt"
+path = "src/bin/qt.rs"
+required-features = ["qt-probe"]
